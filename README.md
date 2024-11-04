@@ -1,8 +1,8 @@
-# Satisfying You
+# Satisfying.you
 
 ## Descrição
 
-**Satisfying You** é um aplicativo móvel desenvolvido em React Native que visa satisfazer o projeto proposto para a disciplina de **Programação para Dispositivos Móveis**.
+**Satisfying.you** é um aplicativo móvel desenvolvido em React Native que visa satisfazer o projeto proposto para a disciplina de **Programação para Dispositivos Móveis**.
 
 ## Instalação
 
