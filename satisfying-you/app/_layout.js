@@ -22,8 +22,24 @@ export default function RootLayout() {
   }
 
   return (
-    <Stack>
+    <Stack
+     screenOptions={{
+        headerStyle: {
+          backgroundColor: '#2B1D62',
+          borderBottomColor: '#2B1D62',
+        },
+
+        headerTintColor: '#573FBA',
+        
+        headerTitleStyle: {
+          fontFamily: 'AveriaLibre',
+          color: '#fff',
+        }
+        
+      }}
+    >
       <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack.Screen name="autenticacao/criarConta" options={{ title: 'Nova Conta' }} />
     </Stack>
     
   );
