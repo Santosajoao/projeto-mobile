@@ -1,29 +1,9 @@
-import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import { useEffect } from "react";
-
-SplashScreen.preventAutoHideAsync();
-
-
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loaded, error] = useFonts({
-    'AveriaLibre': require('../assets/fonts/AveriaLibre-Regular.ttf'),
-  });
-
-  useEffect(() => {
-    if (loaded || error) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded, error]);
-
-  if (!loaded && !error) {
-    return null;
-  }
 
   const handleLogin = () => {
     // Handle login logic here
@@ -71,7 +51,7 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     borderColor: "gray",
-    color: "#fff",  
+    color: "#fff",
     borderWidth: 1,
     marginBottom: 12,
     paddingHorizontal: 8,
