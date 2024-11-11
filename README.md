@@ -22,7 +22,7 @@ Para rodar o projeto localmente, siga os passos abaixo:
 
 4. Inicie o servidor de desenvolvimento:
     ```bash
-    npm start
+    npx expo start
 
 5. Abra o aplicativo Expo Go no seu dispositivo móvel e escaneie o QR code exibido no terminal.
 
