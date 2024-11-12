@@ -1,27 +1,60 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import { Link } from "expo-router";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 import Botao from "../../src/components/Botao";
+import { router } from "expo-router";
 
-const CriarConta = ({ navigation }) => {
+const CriarConta = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [error, setError] = useState(true);
 
   const handleCreateAccount = () => {
-    // Add your account creation logic here
+    // Verificando se o email é válido
+    if (email.length === 0) {
+      setErrorMessage("O campo email não pode ser vazio");
+      return; // Interromper a execução após encontrar um erro
+    }
+
+    if (!email.includes("@") || !email.includes(".")) {
+      setErrorMessage("Insira um email válido");
+      return;
+    }
+
+    // Verificando se a senha e a confirmação de senha são iguais
+    if (password.length === 0) {
+      setErrorMessage("O campo senha não pode ser vazio");
+      return;
+    }
+
+    if (confirmPassword.length === 0) {
+      setErrorMessage("O campo confirmar senha não pode ser vazio");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setErrorMessage("O campo repetir senha está diferente do campo senha");
+      return;
+    }
+
+    // Se não houver erros, podemos definir que não há erro
+    setError(false);
+    setErrorMessage("");
+
+    router.push("/home")
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Email</Text>
-
       <TextInput
         style={styles.input}
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
       />
+
       <Text style={styles.text}>Senha</Text>
       <TextInput
         style={styles.input}
@@ -30,8 +63,8 @@ const CriarConta = ({ navigation }) => {
         value={password}
         onChangeText={setPassword}
       />
-      <Text style={styles.text}>Repetir Senha</Text>
 
+      <Text style={styles.text}>Repetir Senha</Text>
       <TextInput
         style={styles.input}
         placeholder="Confirmar Senha"
@@ -39,13 +72,23 @@ const CriarConta = ({ navigation }) => {
         value={confirmPassword}
         onChangeText={setConfirmPassword}
       />
+      <Text style={[styles.text, { color: "#FD7979" }]}>{errorMessage}</Text>
+
       <Botao
         color={"#37BD6D"}
         fontFamily={"AveriaLibre"}
         title="Criar conta"
         textColor={"#fff"}
         size={20}
+        marginTop={30}
+        onPress={handleCreateAccount}
       />
+      {/* {console.log(error.length)} */}
+      {console.log(!email.includes("@"))}
+      {console.log(!email.includes("."))}
+      {console.log(email.length)}
+      {console.log(password)}
+      {console.log(confirmPassword)}
     </View>
   );
 };
