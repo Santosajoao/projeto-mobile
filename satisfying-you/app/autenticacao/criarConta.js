@@ -83,12 +83,6 @@ const CriarConta = () => {
         marginTop={30}
         onPress={handleCreateAccount}
       />
-      {/* {console.log(error.length)} */}
-      {console.log(!email.includes("@"))}
-      {console.log(!email.includes("."))}
-      {console.log(email.length)}
-      {console.log(password)}
-      {console.log(confirmPassword)}
     </View>
   );
 };
