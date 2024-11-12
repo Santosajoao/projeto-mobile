@@ -1,9 +1,9 @@
-import { Link } from "expo-router";
+
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet, Image } from "react-native";
+import { View, Text, TextInput, StyleSheet, Image } from "react-native";
 import Botao from "../../src/components/Botao";
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -11,10 +11,6 @@ export default function LoginScreen({ navigation }) {
     // Handle login logic here
     console.log("Email:", email);
     console.log("Password:", password);
-  };
-
-  const handleCadastro = () => {
-    return <Link href={"/autenticacao/criarConta"} />;
   };
 
   return (
@@ -63,7 +59,7 @@ export default function LoginScreen({ navigation }) {
         fontFamily="AveriaLibre"
         textColor="#fff"
         size={20}
-        link="/autenticacao/criarConta" // Passando o link para redirecionar
+        link="/autenticacao/criarConta"
       />
 
       <Botao
