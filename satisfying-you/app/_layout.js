@@ -34,12 +34,14 @@ export default function RootLayout() {
         headerTitleStyle: {
           fontFamily: 'AveriaLibre',
           color: '#fff',
+          fontSize:48,
         }
         
       }}
     >
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen name="autenticacao/criarConta" options={{ title: 'Nova Conta' }} />
+      <Stack.Screen name="autenticacao/esqueciSenha" options={{ title: 'Recuperação de senha'}} />
     </Stack>
     
   );

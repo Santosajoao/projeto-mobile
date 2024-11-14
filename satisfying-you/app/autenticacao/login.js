@@ -65,10 +65,10 @@ export default function LoginScreen() {
       <Botao
         color={"#B0CCDE"}
         title="Esqueci minha senha"
-        onPress={handleLogin}
         fontFamily="AveriaLibre"
         textColor={"#fff"}
         size={20}
+        link="/autenticacao/esqueciSenha"
       />
     </View>
   );
@@ -80,16 +80,7 @@ const styles = StyleSheet.create({
     fontFamily: "AveriaLibre",
     fontSize: 16,
   },
-  textButton: {
-    //vou fazer um botão na mão
-    color: "#419ED7",
-    fontSize: 20,
-    backgroundColor: "#fff",
-    padding: 10,
-    borderRadius: 5,
-    height: 50,
-    width: "100%",
-  },
+ 
   container: {
     flex: 1,
     justifyContent: "center",
