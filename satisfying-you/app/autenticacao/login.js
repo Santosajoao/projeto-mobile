@@ -1,16 +1,42 @@
-
 import React, { useState } from "react";
 import { View, Text, TextInput, StyleSheet, Image } from "react-native";
 import Botao from "../../src/components/Botao";
+import { router } from "expo-router";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [error, setError] = useState(true);
 
   const handleLogin = () => {
-    // Handle login logic here
-    console.log("Email:", email);
-    console.log("Password:", password);
+    // Verificando se o email é válido
+    if (email.length === 0) {
+      setErrorMessage("O campo email não pode ser vazio");
+      return;
+    }
+
+    if (!email.includes("@") || !email.includes(".")) {
+      setErrorMessage("Insira um email válido");
+      return;
+    }
+
+    // Verificando se a senha e a confirmação de senha são iguais
+    if (password.length === 0) {
+      setErrorMessage("O campo senha não pode ser vazio");
+      return;
+    }
+
+    if (password !== '12345') {
+      setErrorMessage("E-mail ou senha inválidos");
+      return;
+    }
+
+    // Se não houver erros, podemos definir que não há erro
+    setError(false);
+    setErrorMessage("");
+
+    router.push("/(drawer)");
   };
 
   return (
@@ -41,6 +67,8 @@ export default function LoginScreen() {
         onChangeText={setPassword}
         secureTextEntry
       />
+
+      <Text style={[styles.text, { color: "#FD7979" }]}>{errorMessage}</Text>
 
       <Botao
         color={"#37BD6D"}
