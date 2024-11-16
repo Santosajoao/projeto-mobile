@@ -42,7 +42,7 @@ const CriarConta = () => {
     setError(false);
     setErrorMessage("");
 
-    router.push("/home")
+    router.push("/(drawer)")
   };
 
   return (
