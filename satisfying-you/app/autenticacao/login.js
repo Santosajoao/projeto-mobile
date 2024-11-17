@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TextInput, StyleSheet, Image } from "react-native";
 import Botao from "../../src/components/Botao";
 import { router } from "expo-router";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -43,6 +44,11 @@ export default function LoginScreen() {
     <View style={styles.container}>
       <View style={styles.textWithImage}>
         <Text style={styles.title}>Satisfying.you</Text>
+        {/* <Icon
+          name="sentiment_satisfied"
+          size={40}
+          color="#fff"
+        /> */}
         <Image
           source={require("../../assets/images/image.png")}
           style={styles.image}
