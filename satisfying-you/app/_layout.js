@@ -1,14 +1,13 @@
-import { Stack } from 'expo-router';
-import { useFonts } from 'expo-font';
+import { Stack } from "expo-router";
+import { useFonts } from "expo-font";
 import { useEffect } from "react";
-import * as SplashScreen from 'expo-splash-screen';
+import * as SplashScreen from "expo-splash-screen";
 
 SplashScreen.preventAutoHideAsync();
 
-
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    'AveriaLibre': require('../assets/fonts/AveriaLibre-Regular.ttf'),
+    'AveriaLibre': require("../assets/fonts/AveriaLibre-Regular.ttf"),
   });
 
   useEffect(() => {
@@ -23,25 +22,30 @@ export default function RootLayout() {
 
   return (
     <Stack
-     screenOptions={{
+      screenOptions={{
         headerStyle: {
-          backgroundColor: '#2B1D62',
-          borderBottomColor: '#2B1D62',
+          backgroundColor: "#2B1D62",
+          borderBottomColor: "#2B1D62",
         },
 
-        headerTintColor: '#573FBA',
-        
+        headerTintColor: "#573FBA",
+
         headerTitleStyle: {
-          fontFamily: 'AveriaLibre',
-          color: '#fff',
-        }
-        
+          fontFamily: "AveriaLibre",
+          color: "#fff",
+        },
       }}
     >
+      <Stack.Screen
+        name="autenticacao/login"
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="autenticacao/criarConta" options={{ title: 'Nova Conta' }} />
-      <Stack.Screen name="(drawer)" options={{ headerShown: false  }} />  
+      <Stack.Screen
+        name="autenticacao/criarConta"
+        options={{ title: "Nova Conta" }}
+      />
+      <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
     </Stack>
-    
   );
 }
