@@ -41,7 +41,7 @@ const Home = () => {
         textColor={"#fff"}
         size={20}
         marginTop={30}
-        // onPress={handleCreateAccount}
+        link="/pesquisa/novaPesquisa"
       />
     </ScrollView>
   );

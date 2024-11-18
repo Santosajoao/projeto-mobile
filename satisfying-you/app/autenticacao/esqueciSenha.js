@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import Botao from "../../src/components/Botao";
+import { router } from "expo-router";
 
 export default function esqueciSenhaScreen() {
   const [email, setEmail] = useState("");
@@ -22,6 +23,8 @@ export default function esqueciSenhaScreen() {
 
     setError(false);
     setErrorMessage("");
+
+    router.push("/autenticacao/login");
   };
 
   return (

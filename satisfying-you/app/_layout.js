@@ -33,6 +33,7 @@ export default function RootLayout() {
         headerTitleStyle: {
           fontFamily: "AveriaLibre",
           color: "#fff",
+          fontSize:30,
         },
       }}
     >
@@ -47,6 +48,8 @@ export default function RootLayout() {
       />
       <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
       <Stack.Screen name="autenticacao/esqueciSenha" options={{ title: 'Recuperação de senha'}} />
+      <Stack.Screen name="pesquisa/novaPesquisa" options={{ title: 'Nova pesquisa'}} />
+      <Stack.Screen name="pesquisa/modificarPesquisa" options={{ title: 'Modificar pesquisa'}} />
     </Stack>
   );
 }

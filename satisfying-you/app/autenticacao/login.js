@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, StyleSheet, Image } from "react-native";
+import { View, Text, TextInput, StyleSheet, Image, ScrollView } from "react-native";
 import Botao from "../../src/components/Botao";
 import { router } from "expo-router";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -41,6 +41,7 @@ export default function LoginScreen() {
   };
 
   return (
+    <ScrollView>
     <View style={styles.container}>
       <View style={styles.textWithImage}>
         <Text style={styles.title}>Satisfying.you</Text>
@@ -74,7 +75,7 @@ export default function LoginScreen() {
         secureTextEntry
       />
 
-      <Text style={[styles.text, { color: "#FD7979" }]}>{errorMessage}</Text>
+      <Text style={[styles.text, { color: "#FD7979" },{fontSize:16}]}>{errorMessage}</Text>
 
       <Botao
         color={"#37BD6D"}
@@ -105,6 +106,7 @@ export default function LoginScreen() {
         link="/autenticacao/esqueciSenha"
       />
     </View>
+    </ScrollView>
   );
 }
 
@@ -112,7 +114,7 @@ const styles = StyleSheet.create({
   text: {
     color: "#fff",
     fontFamily: "AveriaLibre",
-    fontSize: 16,
+    fontSize: 20,
   },
  
   container: {
