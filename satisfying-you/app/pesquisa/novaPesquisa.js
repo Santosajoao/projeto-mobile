@@ -69,6 +69,7 @@ export default function novaPesquisa() {
           onPress={handlenovaPequisa}
           textColor={"#fff"}
           size={20}
+          marginTop={15}
         />
   
         <View style={{ height: 50 }} />
