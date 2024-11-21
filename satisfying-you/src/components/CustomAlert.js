@@ -11,13 +11,15 @@ const CustomAlert = ({ visible, onClose, onConfirm }) => {
     >
       <View style={styles.modalOverlay}>
         <View style={styles.modalContainer}>
-          <Text style={styles.modalText}>Tem certeza de apagar essa pesquisa?</Text>
+          <Text style={styles.modalText}>
+            Tem certeza de apagar essa pesquisa?
+          </Text>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.cancelButton} onPress={onConfirm}>
-              <Text style={styles.cancelButtonText}>SIM</Text>
+            <TouchableOpacity style={styles.confirmButton} onPress={onConfirm}>
+              <Text style={styles.confirmButtonText}>SIM</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.confirmButton} onPress={onClose}>
-              <Text style={styles.confirmButtonText}>CANCELAR</Text>
+            <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
+              <Text style={styles.cancelButtonText}>CANCELAR</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -52,25 +54,25 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "100%",
   },
-  cancelButton: {
+  confirmButton: {
     flex: 1,
     backgroundColor: "#FF8383",
     padding: 10,
     marginRight: 10,
     alignItems: "center",
   },
-  cancelButtonText: {
+  confirmButtonText: {
     color: "#fff",
     fontFamily: "AveriaLibre",
   },
-  confirmButton: {
+  cancelButton: {
     flex: 1,
     backgroundColor: "#3F92C5",
     padding: 10,
     marginLeft: 10,
     alignItems: "center",
   },
-  confirmButtonText: {
+  cancelButtonText: {
     color: "#fff",
     fontFamily: "AveriaLibre",
   },

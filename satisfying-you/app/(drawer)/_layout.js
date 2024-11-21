@@ -28,8 +28,8 @@ export default function Layout() {
         drawerContent={CustomDrawerContent}
         screenOptions={{
           drawerStyle: {
-            backgroundColor: "#372775", // Cor de fundo do Drawer
-            width: 260, // Largura do Drawer
+            backgroundColor: "#372775", 
+            width: 260, 
           },
           drawerLabelStyle: {
             fontFamily: "AveriaLibre",
@@ -37,12 +37,12 @@ export default function Layout() {
             color: "#fff",
           },
 
-          drawerInactiveTintColor: "#fff", // Cor dos itens não selecionados
+          drawerInactiveTintColor: "#fff", 
           drawerActiveTintColor: "#000",
 
           drawerItemStyle: {
-            borderRadius: 0, // Remove o borderRadius
-            backgroundColor: "transparent", // Remove a cor de fundo
+            borderRadius: 0, 
+            backgroundColor: "transparent", 
           },
 
           headerStyle: {

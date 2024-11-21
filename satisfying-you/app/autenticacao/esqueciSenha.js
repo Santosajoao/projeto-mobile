@@ -12,7 +12,7 @@ export default function esqueciSenhaScreen() {
   const handleesqueciSenha = () => {
     if (email.length === 0) {
         setErrorMessage("O campo email não pode ser vazio");
-        return; // Interromper a execução após encontrar um erro
+        return;
       }
   
       if (!email.includes("@") || !email.includes(".")) {
