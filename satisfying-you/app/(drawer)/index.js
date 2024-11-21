@@ -47,10 +47,10 @@ const Home = () => {
           route={"pesquisa/acoesPesquisa"}
         />
         <Card
-          iconName="woman"
+          iconName="celebration"
           iconSize={100}
-          iconColor="#D71616"
-          title="Card 4"
+          iconColor="#C60EB3"
+          title="Carnaval"
           caption="01/04/2022"
           route={"pesquisa/acoesPesquisa"}
         />
