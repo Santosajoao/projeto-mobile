@@ -7,7 +7,6 @@ import Card from "../../src/components/Card";
 const Home = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {/* Search Input no topo */}
       <View style={styles.searchContainer}>
         <Icon
           name="search"

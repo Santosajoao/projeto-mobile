@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { useRouter } from 'expo-router';  // Importando o hook useRouter
+import { useRouter } from 'expo-router'; 
 
 const Botao = ({ onPress, title, color, size, textColor, fontFamily, link, marginBottom, marginTop, width, borderRadius }) => {
   const router = useRouter(); 

@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { TouchableOpacity, Text, StyleSheet, Alert } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { useRouter } from 'expo-router';  // Importando o hook useRouter
+import { useRouter } from 'expo-router'; 
 import CustomAlert from "./CustomAlert";
 
 const BotaoApagar = ({ iconName, iconSize, iconColor, title, route }) => {
-  const navigation = useNavigation();
   const [alertVisible, setAlertVisible] = useState(false);
   const router = useRouter(); 
   const handlePress = () => {
@@ -15,7 +13,6 @@ const BotaoApagar = ({ iconName, iconSize, iconColor, title, route }) => {
 
   const handleConfirm = () => {
     setAlertVisible(false);
-    // Adicione a lógica para apagar aqui
     router.push(route);
   };
 
