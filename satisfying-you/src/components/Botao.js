@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';  // Importando o hook useRouter
 
-const Botao = ({ onPress, title, color, size, textColor, fontFamily, link, marginBottom, marginTop }) => {
+const Botao = ({ onPress, title, color, size, textColor, fontFamily, link, marginBottom, marginTop, width, borderRadius }) => {
   const router = useRouter(); 
 
   const handlePress = () => {
@@ -15,7 +15,7 @@ const Botao = ({ onPress, title, color, size, textColor, fontFamily, link, margi
   };
 
   return (
-    <TouchableOpacity style={[styles.button, { backgroundColor: color, marginBottom: marginBottom || 10, marginTop: marginTop }]} onPress={handlePress}>
+    <TouchableOpacity style={[styles.button, { backgroundColor: color, marginBottom: marginBottom || 10, marginTop: marginTop, width: width, borderRadius: borderRadius || 5}]} onPress={handlePress}>
       <Text style={[{ color: textColor, fontSize: size, fontFamily: fontFamily }]}>{title}</Text>
     </TouchableOpacity>
   );
@@ -24,7 +24,6 @@ const Botao = ({ onPress, title, color, size, textColor, fontFamily, link, margi
 const styles = StyleSheet.create({
   button: {
     padding: 10,
-    borderRadius: 5,
     alignItems: 'center',
   },
 });

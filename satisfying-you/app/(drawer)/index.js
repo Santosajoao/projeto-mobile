@@ -2,6 +2,7 @@ import React from "react";
 import { View, TextInput, StyleSheet, ScrollView, Text } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import Botao from "../../src/components/Botao";
+import Card from "../../src/components/Card";
 
 const Home = () => {
   return (
@@ -22,17 +23,38 @@ const Home = () => {
 
       {/* Cards */}
       <View style={styles.cardContainer}>
-        <View style={styles.card}>
-          <Icon name="devices" size={100} color="#704141" />
-          <Text style={styles.cardText}>SECOMP 2023</Text>
-          <Text style={styles.cardCaption}>10/10/2023</Text>
-        </View>
-        <View style={styles.card}>
-          <Text style={styles.cardText}>Card 2</Text>
-        </View>
-        <View style={styles.card}>
-          <Text style={styles.cardText}>Card 3</Text>
-        </View>
+        <Card
+          iconName="devices"
+          iconSize={100}
+          iconColor="#704141"
+          title="Secomp 2023"
+          caption="10/10/2023"
+          route={"pesquisa/acoesPesquisa"}
+        />
+        <Card
+          iconName="groups"
+          iconSize={100}
+          iconColor="#383838"
+          title="Ubuntu 2022"
+          caption="06/06/2022"
+          route={"pesquisa/acoesPesquisa"}
+        />
+        <Card
+          iconName="woman"
+          iconSize={100}
+          iconColor="#D71616"
+          title="Meninas CPU"
+          caption="01/04/2022"
+          route={"pesquisa/acoesPesquisa"}
+        />
+        <Card
+          iconName="woman"
+          iconSize={100}
+          iconColor="#D71616"
+          title="Card 4"
+          caption="01/04/2022"
+          route={"pesquisa/acoesPesquisa"}
+        />
       </View>
       <Botao
         color={"#37BD6D"}
@@ -41,7 +63,7 @@ const Home = () => {
         textColor={"#fff"}
         size={20}
         marginTop={30}
-        // onPress={handleCreateAccount}
+        link="/pesquisa/novaPesquisa"
       />
     </ScrollView>
   );
@@ -60,6 +82,7 @@ const styles = StyleSheet.create({
   },
   searchIcon: {
     position: "absolute",
+    zIndex: 1,
     left: 10,
   },
   searchInput: {
@@ -72,31 +95,9 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     flexGrow: 1,
-    justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
     gap: 20,
-  },
-  card: {
-    width: 271,
-    height: 238,
-    backgroundColor: "#fff",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10,
-    elevation: 3,
-    marginBottom: 20,
-  },
-  cardText: {
-    marginTop: 8,
-    fontSize: 16,
-    color: "#3F92C5",
-    fontFamily: "AveriaLibre-Light",
-  },
-  cardCaption: {
-    color: "#8B8B8B",
-    fontFamily: "AveriaLibre",
-    fontSize: 12,
   },
 });
 

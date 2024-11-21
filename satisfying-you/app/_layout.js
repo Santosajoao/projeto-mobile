@@ -7,7 +7,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    'AveriaLibre': require("../assets/fonts/AveriaLibre-Regular.ttf"),
+    AveriaLibre: require("../assets/fonts/AveriaLibre-Regular.ttf"),
   });
 
   useEffect(() => {
@@ -33,6 +33,7 @@ export default function RootLayout() {
         headerTitleStyle: {
           fontFamily: "AveriaLibre",
           color: "#fff",
+          fontSize: 30,
         },
       }}
     >
@@ -46,6 +47,35 @@ export default function RootLayout() {
         options={{ title: "Nova Conta" }}
       />
       <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="autenticacao/esqueciSenha"
+        options={{ title: "Recuperação de senha" }}
+      />
+      <Stack.Screen
+        name="pesquisa/novaPesquisa"
+        options={{ title: "Nova pesquisa" }}
+      />
+      <Stack.Screen
+        name="pesquisa/modificarPesquisa"
+        options={{ title: "Modificar pesquisa" }}
+      />
+      <Stack.Screen
+        name="pesquisa/acoesPesquisa"
+        options={{ title: "Carnaval" }}
+      />
+
+      <Stack.Screen
+        name="pesquisa/coletarDados"
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="pesquisa/agradecimentoParticipacao"
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="pesquisa/relatorio"
+        options={{ title: "Relatório" }}
+      />
     </Stack>
   );
 }

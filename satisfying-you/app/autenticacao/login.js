@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, StyleSheet, Image } from "react-native";
+import { View, Text, TextInput, StyleSheet, Image, ScrollView } from "react-native";
 import Botao from "../../src/components/Botao";
 import { router } from "expo-router";
-import Icon from "react-native-vector-icons/MaterialIcons";
+
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -28,7 +28,7 @@ export default function LoginScreen() {
       return;
     }
 
-    if (password !== '12345') {
+    if (password !== "12345") {
       setErrorMessage("E-mail ou senha inválidos");
       return;
     }
@@ -41,70 +41,73 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.textWithImage}>
-        <Text style={styles.title}>Satisfying.you</Text>
-        {/* <Icon
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.textWithImage}>
+          <Text style={styles.title}>Satisfying.you</Text>
+          {/* <Icon
           name="sentiment_satisfied"
           size={40}
           color="#fff"
         /> */}
-        <Image
-          source={require("../../assets/images/image.png")}
-          style={styles.image}
+          <Image
+            source={require("../../assets/images/image.png")}
+            style={styles.image}
+          />
+        </View>
+
+        <Text style={styles.text}>E-mail</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+
+        <Text style={styles.text}>Senha</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Senha"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
+
+        <Text style={[styles.text, { color: "#FD7979" }]}>{errorMessage}</Text>
+
+        <Botao
+          color={"#37BD6D"}
+          fontFamily={"AveriaLibre"}
+          title="Entrar"
+          onPress={handleLogin}
+          textColor={"#fff"}
+          size={20}
+        />
+
+        <View style={{ height: 50 }} />
+
+        <Botao
+          color="#419ED7"
+          title="Criar minha conta"
+          fontFamily="AveriaLibre"
+          textColor="#fff"
+          size={20}
+          link="/autenticacao/criarConta"
+        />
+
+        <Botao
+          color={"#B0CCDE"}
+          title="Esqueci minha senha"
+          // onPress={handleLogin}
+          fontFamily="AveriaLibre"
+          textColor={"#fff"}
+          size={20}
+          link="/autenticacao/esqueciSenha"
         />
       </View>
-
-      <Text style={styles.text}>E-mail</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-
-      <Text style={styles.text}>Senha</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-
-      <Text style={[styles.text, { color: "#FD7979" }]}>{errorMessage}</Text>
-
-      <Botao
-        color={"#37BD6D"}
-        fontFamily={"AveriaLibre"}
-        title="Entrar"
-        onPress={handleLogin}
-        textColor={"#fff"}
-        size={20}
-      />
-
-      <View style={{ height: 50 }} />
-
-      <Botao
-        color="#419ED7"
-        title="Criar minha conta"
-        fontFamily="AveriaLibre"
-        textColor="#fff"
-        size={20}
-        link="/autenticacao/criarConta"
-      />
-
-      <Botao
-        color={"#B0CCDE"}
-        title="Esqueci minha senha"
-        onPress={handleLogin}
-        fontFamily="AveriaLibre"
-        textColor={"#fff"}
-        size={20}
-      />
-    </View>
+    </ScrollView>
   );
 }
 
@@ -112,18 +115,9 @@ const styles = StyleSheet.create({
   text: {
     color: "#fff",
     fontFamily: "AveriaLibre",
-    fontSize: 16,
-  },
-  textButton: {
-    //vou fazer um botão na mão
-    color: "#419ED7",
     fontSize: 20,
-    backgroundColor: "#fff",
-    padding: 10,
-    borderRadius: 5,
-    height: 50,
-    width: "100%",
   },
+ 
   container: {
     flex: 1,
     justifyContent: "center",
