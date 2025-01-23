@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import Botao from "../../src/components/Botao";
 import { router } from "expo-router";
+import { auth } from "../../src/firebase/config";
+import { sendPasswordResetEmail } from "firebase/auth";
 
 export default function esqueciSenhaScreen() {
   const [email, setEmail] = useState("");
@@ -25,6 +27,17 @@ export default function esqueciSenhaScreen() {
     setErrorMessage("");
 
     router.push("/autenticacao/login");
+
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        console.log(JSON.stringify() + "Email enviado com sucesso");
+        router.push("/autenticacao/login");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log("falha" + errorCode + errorMessage);
+      });
   };
 
   return (
