@@ -1,8 +1,16 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, StyleSheet, Image, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Image,
+  ScrollView,
+} from "react-native";
 import Botao from "../../src/components/Botao";
 import { router } from "expo-router";
-
+import { auth } from "../../src/firebase/config";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -28,16 +36,21 @@ export default function LoginScreen() {
       return;
     }
 
-    if (password !== "12345") {
-      setErrorMessage("E-mail ou senha inválidos");
-      return;
-    }
-
     // Se não houver erros, podemos definir que não há erro
     setError(false);
     setErrorMessage("");
 
-    router.push("/(drawer)");
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userLogged) => {
+        // Signed in
+        console.log(JSON.stringify(userLogged) + "Usuário logado com sucesso");
+        router.push("/(drawer)");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode + errorMessage);
+      });
   };
 
   return (
@@ -117,7 +130,7 @@ const styles = StyleSheet.create({
     fontFamily: "AveriaLibre",
     fontSize: 20,
   },
- 
+
   container: {
     flex: 1,
     justifyContent: "center",
