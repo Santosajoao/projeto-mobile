@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import Botao from "../../src/components/Botao";
 import { router } from "expo-router";
+import { auth } from "../../src/firebase/config";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const CriarConta = () => {
   const [email, setEmail] = useState("");
@@ -11,38 +13,50 @@ const CriarConta = () => {
   const [error, setError] = useState(true);
 
   const handleCreateAccount = () => {
-    // Verificando se o email é válido
-    if (email.length === 0) {
-      setErrorMessage("O campo email não pode ser vazio");
-      return; // Interromper a execução após encontrar um erro
-    }
+      // Verificando se o email é válido
+      if (email.length === 0) {
+        setErrorMessage("O campo email não pode ser vazio");
+        return; // Interromper a execução após encontrar um erro
+      }
 
-    if (!email.includes("@") || !email.includes(".")) {
-      setErrorMessage("Insira um email válido");
-      return;
-    }
+      if (!email.includes("@") || !email.includes(".")) {
+        setErrorMessage("Insira um email válido");
+        return;
+      }
 
-    // Verificando se a senha e a confirmação de senha são iguais
-    if (password.length === 0) {
-      setErrorMessage("O campo senha não pode ser vazio");
-      return;
-    }
+      // Verificando se a senha e a confirmação de senha são iguais
+      if (password.length === 0) {
+        setErrorMessage("O campo senha não pode ser vazio");
+        return;
+      }
 
-    if (confirmPassword.length === 0) {
-      setErrorMessage("O campo confirmar senha não pode ser vazio");
-      return;
-    }
+      if (confirmPassword.length === 0) {
+        setErrorMessage("O campo confirmar senha não pode ser vazio");
+        return;
+      }
 
-    if (password !== confirmPassword) {
-      setErrorMessage("O campo repetir senha está diferente do campo senha");
-      return;
-    }
+      if (password !== confirmPassword) {
+        setErrorMessage("O campo repetir senha está diferente do campo senha");
+        return;
+      }
 
-    // Se não houver erros, podemos definir que não há erro
-    setError(false);
-    setErrorMessage("");
+      // Se não houver erros, podemos definir que não há erro
+      setError(false);
+      setErrorMessage("");
 
-    router.push("/(drawer)")
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        console.log(
+          JSON.stringify(userCredential) + "Usuário criado com sucesso"
+        );
+        router.push("/(drawer)");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode + errorMessage);
+      });
   };
 
   return (
