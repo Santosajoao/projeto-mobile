@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { View, Text, TextInput, StyleSheet, Image, ScrollView } from "react-native";
 import Botao from "../../src/components/Botao";
 import { router } from "expo-router";
+import { collection, addDoc} from "firebase/firestore";
+import { db } from "../../src/firebase/config";
 
 export default function novaPesquisa() {
     const [nome, setNome] = useState("");
@@ -10,6 +12,8 @@ export default function novaPesquisa() {
     const [errorMessage, setErrorMessage] = useState("");
     const [error, setError] = useState(true);
   
+    const pesquisasCollection = collection(db, "pesquisas");
+
     const handlenovaPequisa = () => {
       // Verificando se o nome não está vazio
       if (nome.length === 0) {
@@ -26,6 +30,17 @@ export default function novaPesquisa() {
       // Se não houver erros, podemos definir que não há erro
       setError(false);
       setErrorMessage("");
+
+      const novaPesquisa = {
+        nome: nome,
+        data: data,
+        imagem: imagem,
+      };
+      addDoc(pesquisasCollection, novaPesquisa).then((docRef) => {
+        console.log("Document written with ID: ", docRef.id);
+      }).catch((error) => {
+        console.error("Error adding document: ", error);
+      });
   
       router.push("/(drawer)");
     };
