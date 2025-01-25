@@ -35,6 +35,8 @@ export default function novaPesquisa() {
         nome: nome,
         data: data,
         imagem: imagem,
+        iconName:"",
+        iconColor:"",
       };
       addDoc(pesquisasCollection, novaPesquisa).then((docRef) => {
         console.log("Document written with ID: ", docRef.id);
