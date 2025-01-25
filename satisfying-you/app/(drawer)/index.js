@@ -1,10 +1,33 @@
-import React from "react";
-import { View, TextInput, StyleSheet, ScrollView, Text } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import Botao from "../../src/components/Botao";
 import Card from "../../src/components/Card";
-
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "../../src/firebase/config";
 const Home = () => {
+  const [pesquisas, setPesquisas] = useState([]);
+  const pesquisasCollection = collection(db, "pesquisas");
+
+  useEffect(() => {
+    const querySnapshot = onSnapshot(pesquisasCollection, (snapshot) => {
+      const data = [];
+      snapshot.forEach((doc) => {
+        data.push(doc.data());
+      });
+      setPesquisas(data);
+    });
+  }, []);
+
+  if (pesquisas.length === 0) {
+    return null;
+  }
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.searchContainer}>
@@ -22,15 +45,28 @@ const Home = () => {
 
       {/* Cards */}
       <View style={styles.cardContainer}>
-        <Card
+        {/* <Card
           iconName="devices"
+          data={pesquisas}
           iconSize={100}
           iconColor="#704141"
           title="Secomp 2023"
           caption="10/10/2023"
           route={"pesquisa/acoesPesquisa"}
-        />
-        <Card
+        /> */}
+        {/* map para listar */}
+        {pesquisas.map((pesquisa) => (
+          <Card
+            iconName={pesquisa.iconName}
+            iconSize={100}
+            iconColor={pesquisa.iconColor}
+            title={pesquisa.nome}
+            caption={pesquisa.data}
+            route={"pesquisa/acoesPesquisa"}
+          />
+        ))}
+
+        {/* <Card
           iconName="groups"
           iconSize={100}
           iconColor="#383838"
@@ -53,7 +89,7 @@ const Home = () => {
           title="Carnaval"
           caption="01/04/2022"
           route={"pesquisa/acoesPesquisa"}
-        />
+        /> */}
       </View>
       <Botao
         color={"#37BD6D"}
