@@ -1,14 +1,30 @@
-import React, { useState } from "react";
-import { View, Text, TextInput, StyleSheet, Image, ScrollView } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, TextInput, StyleSheet, Image,ScrollView,
+} from "react-native";
 import Botao from "../../src/components/Botao";
 import { router } from "expo-router";
 import Apagar from "../../src/components/BotaoApagar";
+import { collection, updateDoc, doc, deleteDoc, getDoc,} from "firebase/firestore";
+import { db } from "../../src/firebase/config";
 
 export default function modificarPesquisa() {
-  const [nome, setNome] = useState("Carnaval 2024");
-  const [data, setData] = useState("16/02/2024");
+  const [nome, setNome] = useState("");
+  const [data, setData] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [error, setError] = useState(true);
+
+  useEffect(() => {
+    getDoc(doc(db, "pesquisas", "xdH1nwllj6ExgUpYIRI4"))
+      .then((doc) => {
+        if (doc.exists()) {
+          setNome(doc.data().nome);
+          setData(doc.data().data);
+        }
+      })
+      .catch((error) => {
+        return null;
+      });
+  }, []);
 
   const handlemodificarPequisa = () => {
     // Verificando se o nome não está vazio
@@ -27,8 +43,21 @@ export default function modificarPesquisa() {
     setError(false);
     setErrorMessage("");
 
-    router.push("/(drawer)");
+    const pesquisaRef = doc(db, "pesquisas", "xdH1nwllj6ExgUpYIRI4");
+
+    updateDoc(pesquisaRef, {
+      nome: nome,
+      data: data,
+    })
+      .then(() => {
+        router.push("/(drawer)");
+        console.log("Document successfully updated!");
+      })
+      .catch((error) => {
+        console.error("Error updating document: ", error);
+      });
   };
+
 
   return (
     <ScrollView>
