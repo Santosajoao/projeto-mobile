@@ -63,6 +63,7 @@ const Home = () => {
             title={pesquisa.nome}
             caption={pesquisa.data}
             route={"pesquisa/acoesPesquisa"}
+            imagem={pesquisa.imagem || null}
           />
         ))}
 
