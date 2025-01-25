@@ -1,14 +1,18 @@
 import React from "react";
 import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
+import Chart from "../../src/components/Chart";
 
 export default function Relatorio() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.content}>
-        <Image
+        <View>
+        <Chart style={styles.image}/>
+        </View>
+        {/* <Image
           source={require("../../assets/images/pie-chart 1.png")}
           style={styles.image}
-        />
+        /> */}
         <View style={styles.legendContainer}>
           <View style={styles.legendItem}>
             <View style={[styles.legendColor, { backgroundColor: "#F1CE7E" }]} />
@@ -48,8 +52,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: 300,
-    height:300,
     marginRight: 20,
     marginBottom: 50,
   },
