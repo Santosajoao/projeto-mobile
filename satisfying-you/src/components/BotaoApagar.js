@@ -3,6 +3,9 @@ import { TouchableOpacity, Text, StyleSheet, Alert } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useRouter } from 'expo-router'; 
 import CustomAlert from "./CustomAlert";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "../firebase/config";
+
 
 const BotaoApagar = ({ iconName, iconSize, iconColor, title, route }) => {
   const [alertVisible, setAlertVisible] = useState(false);
@@ -12,6 +15,13 @@ const BotaoApagar = ({ iconName, iconSize, iconColor, title, route }) => {
   };
 
   const handleConfirm = () => {
+    deleteDoc(doc(db, "pesquisas", "xdH1nwllj6ExgUpYIRI4"))
+      .then(() => {
+        console.log("Document successfully deleted!");
+      })
+      .catch((error) => {
+        console.error("Error removing document: ", error);
+      });
     setAlertVisible(false);
     router.push(route);
   };
