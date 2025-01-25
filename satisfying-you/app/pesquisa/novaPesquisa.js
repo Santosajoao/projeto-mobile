@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, StyleSheet, Image, ScrollView } from "react-native";
+import { View, Text, TextInput, StyleSheet, Image, ScrollView, Pressable } from "react-native";
 import Botao from "../../src/components/Botao";
 import { router } from "expo-router";
 import { collection, addDoc} from "firebase/firestore";
 import { db } from "../../src/firebase/config";
+import { launchCamera, launchImageLibrary } from "react-native-image-picker";
+import ImageResizer from "react-native-image-resizer";
 
 export default function novaPesquisa() {
     const [nome, setNome] = useState("");
@@ -46,6 +48,37 @@ export default function novaPesquisa() {
   
       router.push("/(drawer)");
     };
+
+
+    const convertUriToBase64 = async (uri) => {
+      const resizedImage = await ImageResizer.createResizedImage(uri, 100, 100, "JPEG", 100);
+      const imageUri = await fetch(resizedImage.uri);
+      const imageBlob = await imageUri.blob();
+      const reader = new FileReader(); 
+      reader.onloadend = () => {
+        setImagem(reader.result);
+      };
+      reader.readAsDataURL(imageBlob);
+    };
+
+    const pickImage = () => {
+      launchImageLibrary(
+        {
+          mediaType: "photo",
+          quality: 1,
+        },
+        (response) => {
+          if (response.didCancel) {
+            console.log("User cancelled image picker");
+          } else if (response.errorCode) {
+            console.log("ImagePicker Error: ", response.errorMessage);
+          } else {
+            console.log(response);
+            setImagem(response.assets[0].uri);
+          }
+        }
+      );
+    }
   
     return (
       <ScrollView>
@@ -70,12 +103,26 @@ export default function novaPesquisa() {
         />
         </View>
         <Text style={styles.text}>Imagem</Text>
-        <TextInput
+
+        <Pressable
+          style={styles.inputimagem}
+          onPress={pickImage}
+          
+        >
+          <Text style={styles.inputimagem}>Câmera/Galeria de imagens</Text>
+        </Pressable>
+
+        <Image
+          source={{ uri: imagem }}
+          style={{ width: 100, height: 100, alignSelf: "center" }}
+        />
+
+        {/* <TextInput
           style={styles.inputimagem}
           placeholder="Câmera/Galeria de imagens"
           value={imagem}
           onChangeText={setImagem}
-        />
+        /> */}
   
         <Text style={[styles.text, { color: "#FD7979" },{fontSize:16}]}>{errorMessage}</Text>
   
@@ -163,6 +210,9 @@ export default function novaPesquisa() {
       backgroundColor:'#fff',
       width: '40%',
       textAlign:'center',
+      alignItems:'center',
+      justifyContent:'center',
+      alignContent:'center',
     },
     image: {
         width: 20,
