@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  Image,
-  ScrollView,
-} from "react-native";
+import { View, Text, TextInput, StyleSheet, Image, ScrollView } from "react-native";
 import Botao from "../../src/components/Botao";
 import { router } from "expo-router";
 import { auth } from "../../src/firebase/config";
@@ -42,14 +35,11 @@ export default function LoginScreen() {
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userLogged) => {
-        // Signed in
-        console.log(JSON.stringify(userLogged) + "Usuário logado com sucesso");
         router.push("/(drawer)");
       })
       .catch((error) => {
-        const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorCode + errorMessage);
+        errorMessage == "Firebase: Error (auth/invalid-credential)." ? setErrorMessage("Email ou senha inválidos") : setErrorMessage(errorMessage);
       });
   };
 
@@ -58,11 +48,6 @@ export default function LoginScreen() {
       <View style={styles.container}>
         <View style={styles.textWithImage}>
           <Text style={styles.title}>Satisfying.you</Text>
-          {/* <Icon
-          name="sentiment_satisfied"
-          size={40}
-          color="#fff"
-        /> */}
           <Image
             source={require("../../assets/images/image.png")}
             style={styles.image}
@@ -113,7 +98,6 @@ export default function LoginScreen() {
         <Botao
           color={"#B0CCDE"}
           title="Esqueci minha senha"
-          // onPress={handleLogin}
           fontFamily="AveriaLibre"
           textColor={"#fff"}
           size={20}
