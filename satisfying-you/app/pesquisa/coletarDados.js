@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
-import Icon from "react-native-vector-icons/MaterialIcons";
 import Rating from "../../src/components/rating";
+import { useSelector } from "react-redux";
 
 export default function coletarDados() {
+  const pesquisa = useSelector((state) => state.pesquisa);
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.container}>
-        <Text style={styles.title}>O que você achou do carnaval? 2024</Text>
+        <Text style={styles.title}>O que você achou do {pesquisa.pesquisaInfo.nome}?</Text>
         <View style={styles.cardContainer}>
           <Rating
             iconName="sentiment-very-dissatisfied"
