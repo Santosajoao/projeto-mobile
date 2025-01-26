@@ -2,23 +2,30 @@
 import React from "react";
 import { Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { useDispatch } from "react-redux";
+import { setPesquisaInfo } from "../../redux/pesquisaReducer";
 
 import { useNavigation } from "@react-navigation/native";
 
-const Card = ({ iconName, iconSize, iconColor, title, caption, route, imagem }) => {
+const Card = ({ caption, route, iconSize, pesquisa }) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
-  title = title.toUpperCase();
+  const dispatchInfo = () => {
+    dispatch(setPesquisaInfo(pesquisa));
+    console.log("click", pesquisa);
+    navigation.navigate(route)
+  }
 
   return (
     <TouchableOpacity
       style={styles.card}
-      onPress={() => navigation.navigate(route)}
+      onPress={dispatchInfo}
     >
-      {iconName && <Icon name={iconName} size={iconSize} color={iconColor} />}
-      {imagem && <Image source={{ uri: imagem }} style={{ width: 100, height: 100 }} />}
-      <Text style={styles.cardText}>{title}</Text>
-      {caption && <Text style={styles.cardCaption}>{caption}</Text>}
+      {pesquisa.iconName && <Icon name={pesquisa.iconName} size={iconSize} color={pesquisa.iconColor} />}
+      {pesquisa.imagem && <Image source={{ uri: pesquisa.imagem }} style={{ width: 100, height: 100 }} />}
+      <Text style={styles.cardText}>{pesquisa.nome.toUpperCase()}</Text>
+      {caption && <Text style={styles.cardCaption}>{pesquisa.data}</Text>}
     </TouchableOpacity>
   );
 };
