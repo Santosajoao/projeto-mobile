@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  TextInput,
-  StyleSheet,
-  ScrollView,
-} from "react-native";
+import { View, TextInput, StyleSheet, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import Botao from "../../src/components/Botao";
 import Card from "../../src/components/Card";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../../src/firebase/config";
+
 const Home = () => {
   const [pesquisas, setPesquisas] = useState([]);
   const pesquisasCollection = collection(db, "pesquisas");
+
 
   useEffect(() => {
     const querySnapshot = onSnapshot(pesquisasCollection, (snapshot) => {
@@ -27,6 +24,8 @@ const Home = () => {
   if (pesquisas.length === 0) {
     return null;
   }
+  console.log(pesquisas);
+  
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -55,6 +54,11 @@ const Home = () => {
           route={"pesquisa/acoesPesquisa"}
         /> */}
         {/* map para listar */}
+        <ScrollView
+        contentContainerStyle={styles.cardContainer}
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        >
         {pesquisas.map((pesquisa) => (
           <Card
             iconName={pesquisa.iconName}
@@ -64,8 +68,10 @@ const Home = () => {
             caption={pesquisa.data}
             route={"pesquisa/acoesPesquisa"}
             imagem={pesquisa.imagem || null}
+            pesquisa={pesquisa}
           />
         ))}
+        </ScrollView>
 
         {/* <Card
           iconName="groups"
@@ -107,6 +113,11 @@ const Home = () => {
 
 const styles = StyleSheet.create({
   container: {
+    flexGrow: 1,
+    padding: 16,
+    backgroundColor: "#372775",
+  },
+  containerCards: {
     flexGrow: 1,
     padding: 16,
     backgroundColor: "#372775",
