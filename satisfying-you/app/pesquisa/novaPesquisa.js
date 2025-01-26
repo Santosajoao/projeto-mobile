@@ -13,6 +13,7 @@ export default function novaPesquisa() {
   const [imagem, setImagem] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [error, setError] = useState(true);
+  const [message, setMessage] = useState("");
 
   const pesquisasCollection = collection(db, "pesquisas");
 
@@ -56,16 +57,18 @@ export default function novaPesquisa() {
         // Atualize o documento com o id
         updateDoc(docRef, novaPesquisa)
           .then(() => {
-            console.log("Document successfully updated with ID: ", docRef.id);
+            setMessage("Pesquisa cadastrada com sucesso!");
+            setTimeout(() => {
+             router.push("/(drawer)");
+            }, 3000);
           })
           .catch((error) => {
-            console.error("Error updating document: ", error);
+            setErrorMessage("Erro ao cadastrar pesquisa");
           });
 
-        router.push("/(drawer)");
       })
       .catch((error) => {
-        console.error("Error adding document: ", error);
+        setErrorMessage("Erro ao cadastrar pesquisa");
       });
   };
 
@@ -137,13 +140,6 @@ export default function novaPesquisa() {
             style={{ width: 100, height: 100, alignSelf: "center" }}
           />
         )}
-
-        {/* <TextInput
-          style={styles.inputimagem}
-          placeholder="Câmera/Galeria de imagens"
-          value={imagem}
-          onChangeText={setImagem}
-        /> */}
 
         <Text style={[styles.text, { color: "#FD7979" }, { fontSize: 16 }]}>
           {errorMessage}
@@ -264,7 +260,7 @@ const styles = StyleSheet.create({
   image: {
     width: 20,
     height: 20,
-    marginRight: 10, // Espaçamento entre a imagem e o input
+    marginRight: 10,
   },
   textWithImage: {
     flexDirection: "row",
