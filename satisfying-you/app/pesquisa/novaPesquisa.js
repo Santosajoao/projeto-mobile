@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  Image,
-  ScrollView,
-  Pressable,
-} from "react-native";
+import { View, Text, TextInput, StyleSheet, Image, ScrollView, Pressable } from "react-native";
 import Botao from "../../src/components/Botao";
 import { router } from "expo-router";
 import { collection, addDoc, updateDoc } from "firebase/firestore";
@@ -54,6 +46,11 @@ export default function novaPesquisa() {
           iconName: "",
           iconColor: "",
           id: docRef.id,
+          avRuim: 0,
+          avBom: 0,
+          avExcelente: 0,
+          avNeutro: 0,
+          avPessimo: 0,
         };
 
         // Atualize o documento com o id
