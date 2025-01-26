@@ -7,7 +7,7 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../firebase/config";
 
 
-const BotaoApagar = ({ iconName, iconSize, iconColor, title, route }) => {
+const BotaoApagar = ({ iconName, iconSize, iconColor, title, route, pesquisaInfo }) => {
   const [alertVisible, setAlertVisible] = useState(false);
   const router = useRouter(); 
   const handlePress = () => {
@@ -15,7 +15,7 @@ const BotaoApagar = ({ iconName, iconSize, iconColor, title, route }) => {
   };
 
   const handleConfirm = () => {
-    deleteDoc(doc(db, "pesquisas", "xdH1nwllj6ExgUpYIRI4"))
+    deleteDoc(doc(db, "pesquisas", pesquisaInfo.id))
       .then(() => {
         console.log("Document successfully deleted!");
       })
