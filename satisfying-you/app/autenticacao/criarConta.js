@@ -11,6 +11,7 @@ const CriarConta = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [error, setError] = useState(true);
+  const [message, setMessage] = useState("");
 
   const handleCreateAccount = () => {
       // Verificando se o email é válido
@@ -46,16 +47,14 @@ const CriarConta = () => {
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in
-        console.log(
-          JSON.stringify(userCredential) + "Usuário criado com sucesso"
-        );
-        router.push("/(drawer)");
+        setMessage("Conta criada com sucesso");
+        setTimeout(() => {
+          router.push("/(drawer)");
+        }, 3000);
       })
       .catch((error) => {
-        const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorCode + errorMessage);
+        setErrorMessage(errorMessage);
       });
   };
 
@@ -97,6 +96,7 @@ const CriarConta = () => {
         marginTop={30}
         onPress={handleCreateAccount}
       />
+      <Text style={[styles.text, { color: "#37BD6D" }]}>{message}</Text>
     </View>
   );
 };
