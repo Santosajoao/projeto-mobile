@@ -1,24 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, StyleSheet, Image,ScrollView,
-} from "react-native";
+import { View, Text, TextInput, StyleSheet, Image, ScrollView, Pressable} from "react-native";
 import Botao from "../../src/components/Botao";
 import { router } from "expo-router";
 import Apagar from "../../src/components/BotaoApagar";
-import { collection, updateDoc, doc, deleteDoc, getDoc,} from "firebase/firestore";
+import { updateDoc, doc, getDoc} from "firebase/firestore";
 import { db } from "../../src/firebase/config";
+import { useSelector } from "react-redux";
+import { launchImageLibrary } from "react-native-image-picker";
+import ImageResizer from "react-native-image-resizer";
 
 export default function modificarPesquisa() {
   const [nome, setNome] = useState("");
   const [data, setData] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [error, setError] = useState(true);
+  const pesquisa = useSelector((state) => state.pesquisa);
+  const [imagem, setImagem] = useState("");
 
+  console.log(pesquisa);
+
+// UseEffect para pegar os dados da pesquisa
   useEffect(() => {
-    getDoc(doc(db, "pesquisas", "xdH1nwllj6ExgUpYIRI4"))
+    getDoc(doc(db, "pesquisas", pesquisa.pesquisaInfo.id))
       .then((doc) => {
         if (doc.exists()) {
           setNome(doc.data().nome);
           setData(doc.data().data);
+          setImagem(doc.data().imagem);
         }
       })
       .catch((error) => {
@@ -43,11 +51,13 @@ export default function modificarPesquisa() {
     setError(false);
     setErrorMessage("");
 
-    const pesquisaRef = doc(db, "pesquisas", "xdH1nwllj6ExgUpYIRI4");
-
+    const pesquisaRef = doc(db, "pesquisas", pesquisa.pesquisaInfo.id);
+   
+    // Atualizando os dados da pesquisa
     updateDoc(pesquisaRef, {
       nome: nome,
       data: data,
+      imagem: imagem,
     })
       .then(() => {
         router.push("/(drawer)");
@@ -58,6 +68,43 @@ export default function modificarPesquisa() {
       });
   };
 
+  // Função para converter a imagem em base64
+  const convertUriToBase64 = async (uri) => {
+    const resizedImage = await ImageResizer.createResizedImage(
+      uri,
+      100,
+      100,
+      "JPEG",
+      100
+    );
+    const imageUri = await fetch(resizedImage.uri);
+    const imageBlob = await imageUri.blob();
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagem(reader.result);
+    };
+    reader.readAsDataURL(imageBlob);
+  };
+
+  // Função para pegar a imagem da galeria
+  const pickImage = () => {
+    launchImageLibrary(
+      {
+        mediaType: "photo",
+        quality: 1,
+      },
+      (response) => {
+        if (response.didCancel) {
+          console.log("User cancelled image picker");
+        } else if (response.errorCode) {
+          console.log("ImagePicker Error: ", response.errorMessage);
+        } else {
+          console.log(response);
+          setImagem(response.assets[0].uri);
+        }
+      }
+    );
+  };
 
   return (
     <ScrollView>
@@ -77,12 +124,19 @@ export default function modificarPesquisa() {
           />
         </View>
         <Text style={styles.text}>Imagem</Text>
+        
         <View style={styles.inputContainerImagem}>
-          <Image
-            source={require("../../assets/images/carnaval.png")}
-            style={styles.imagemodificar}
-          />
+          <Pressable onPress={pickImage}>
+            <Text style={styles.textInputimagem}>Câmera/Galeria de imagens</Text>
+          </Pressable>
         </View>
+        
+        {imagem &&
+          <Image
+            source={{ uri: imagem }}
+            style={{ width: 100, height: 100, alignSelf: "center" }}
+          />
+        }
 
         <Text style={[styles.text, { color: "#FD7979" }, { fontSize: 16 }]}>
           {errorMessage}
@@ -112,6 +166,7 @@ export default function modificarPesquisa() {
             iconColor="#fff"
             title="Apagar"
             route={"/(drawer)"}
+            pesquisaInfo={pesquisa.pesquisaInfo}
           />
         </View>
 
@@ -191,6 +246,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     width: "40%",
     marginBottom: 42,
+  },
+  textInputimagem: {
+    fontFamily: "AveriaLibre",
+    color: "#3F92C5",
+    paddingHorizontal: 6,
+    backgroundColor: "#fff",
+    textAlign: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    alignContent: "center",
   },
 
   image: {
