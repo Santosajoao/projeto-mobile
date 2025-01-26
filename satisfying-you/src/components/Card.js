@@ -1,10 +1,8 @@
-// Card.js
 import React from "react";
 import { Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useDispatch } from "react-redux";
 import { setPesquisaInfo } from "../../redux/pesquisaReducer";
-
 import { useNavigation } from "@react-navigation/native";
 
 const Card = ({ caption, route, iconSize, pesquisa }) => {
@@ -13,7 +11,6 @@ const Card = ({ caption, route, iconSize, pesquisa }) => {
 
   const dispatchInfo = () => {
     dispatch(setPesquisaInfo(pesquisa));
-    console.log("click", pesquisa);
     navigation.navigate(route)
   }
 

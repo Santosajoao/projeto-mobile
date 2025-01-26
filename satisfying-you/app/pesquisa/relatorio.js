@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 
 export default function Relatorio() {
   const pesquisa = useSelector((state) => state.pesquisa);
-  console.log(pesquisa);
   const allZero =
     pesquisa.pesquisaInfo.avPessimo == 0 &&
     pesquisa.pesquisaInfo.avExcelente == 0 &&
@@ -13,7 +12,6 @@ export default function Relatorio() {
     pesquisa.pesquisaInfo.avNeutro == 0 &&
     pesquisa.pesquisaInfo.avRuim == 0;
 
-    console.log(allZero);
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {allZero ? (
@@ -23,10 +21,7 @@ export default function Relatorio() {
           <View>
             <Chart style={styles.image} pesquisa={pesquisa.pesquisaInfo} />
           </View>
-          {/* <Image
-          source={require("../../assets/images/pie-chart 1.png")}
-          style={styles.image}
-        /> */}
+          
           <View style={styles.legendContainer}>
             <View style={styles.legendItem}>
               <View

@@ -10,8 +10,6 @@ import { useSelector } from "react-redux";
 const Rating = ({ iconName, iconSize, iconColor, caption, route, avaliacao }) => {
   const navigation = useNavigation();
   const pesquisa = useSelector((state) => state.pesquisa);
-  console.log(pesquisa);
-  
 
   const handlePress = () => {
    updateDoc(doc(db, "pesquisas", pesquisa.pesquisaInfo.id), {

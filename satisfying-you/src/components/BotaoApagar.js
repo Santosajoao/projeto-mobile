@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TouchableOpacity, Text, StyleSheet, Alert } from "react-native";
+import { TouchableOpacity, Text, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useRouter } from 'expo-router'; 
 import CustomAlert from "./CustomAlert";
