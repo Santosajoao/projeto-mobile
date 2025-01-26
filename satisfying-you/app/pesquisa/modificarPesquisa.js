@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, StyleSheet, Image, ScrollView, Pressable} from "react-native";
+import { View, Text, TextInput, StyleSheet, Image, ScrollView, Pressable } from "react-native";
 import Botao from "../../src/components/Botao";
 import { router } from "expo-router";
 import Apagar from "../../src/components/BotaoApagar";
-import { updateDoc, doc, getDoc} from "firebase/firestore";
+import { updateDoc, doc, getDoc } from "firebase/firestore";
 import { db } from "../../src/firebase/config";
 import { useSelector } from "react-redux";
 import { launchImageLibrary } from "react-native-image-picker";
@@ -13,13 +13,12 @@ export default function modificarPesquisa() {
   const [nome, setNome] = useState("");
   const [data, setData] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [message, setMessage] = useState("");
   const [error, setError] = useState(true);
   const pesquisa = useSelector((state) => state.pesquisa);
   const [imagem, setImagem] = useState("");
 
-  console.log(pesquisa);
-
-// UseEffect para pegar os dados da pesquisa
+  // UseEffect para pegar os dados da pesquisa
   useEffect(() => {
     getDoc(doc(db, "pesquisas", pesquisa.pesquisaInfo.id))
       .then((doc) => {
@@ -52,7 +51,7 @@ export default function modificarPesquisa() {
     setErrorMessage("");
 
     const pesquisaRef = doc(db, "pesquisas", pesquisa.pesquisaInfo.id);
-   
+
     // Atualizando os dados da pesquisa
     updateDoc(pesquisaRef, {
       nome: nome,
@@ -60,11 +59,13 @@ export default function modificarPesquisa() {
       imagem: imagem,
     })
       .then(() => {
-        router.push("/(drawer)");
-        console.log("Document successfully updated!");
+        setMessage("Pesquisa modificada com sucesso");
+        setTimeout(() => {
+          router.push("/(drawer)");
+        }, 3000);
       })
       .catch((error) => {
-        console.error("Error updating document: ", error);
+        setErrorMessage("Erro ao modificar a pesquisa");
       });
   };
 
@@ -95,11 +96,10 @@ export default function modificarPesquisa() {
       },
       (response) => {
         if (response.didCancel) {
-          console.log("User cancelled image picker");
+          setErrorMessage("Imagem não selecionada");
         } else if (response.errorCode) {
-          console.log("ImagePicker Error: ", response.errorMessage);
+          setErrorMessage("Erro ao selecionar a imagem");
         } else {
-          console.log(response);
           setImagem(response.assets[0].uri);
         }
       }
@@ -124,19 +124,23 @@ export default function modificarPesquisa() {
           />
         </View>
         <Text style={styles.text}>Imagem</Text>
-        
+
         <View style={styles.inputContainerImagem}>
           <Pressable onPress={pickImage}>
-            <Text style={styles.textInputimagem}>Câmera/Galeria de imagens</Text>
+            <Text style={styles.textInputimagem}>
+              Câmera/Galeria de imagens
+            </Text>
           </Pressable>
         </View>
-        
-        {imagem &&
+
+        <Text style={[styles.text, { color: "#37BD6D" }]}>{message}</Text>
+
+        {imagem && (
           <Image
             source={{ uri: imagem }}
             style={{ width: 100, height: 100, alignSelf: "center" }}
           />
-        }
+        )}
 
         <Text style={[styles.text, { color: "#FD7979" }, { fontSize: 16 }]}>
           {errorMessage}
@@ -149,7 +153,6 @@ export default function modificarPesquisa() {
             alignItems: "center",
           }}
         >
-          {/* Botão de icone de apagar */}
           <Botao
             color={"#37BD6D"}
             fontFamily={"AveriaLibre"}
@@ -261,11 +264,11 @@ const styles = StyleSheet.create({
   image: {
     width: 20,
     height: 20,
-    marginRight: 10, // Espaçamento entre a imagem e o input
+    marginRight: 10,
   },
   imagemodificar: {
     width: 50,
     height: 50,
-    marginRight: 10, // Espaçamento entre a imagem e o input
+    marginRight: 10,
   },
 });
