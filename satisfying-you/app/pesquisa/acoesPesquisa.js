@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, ScrollView, StyleSheet } from "react-native";
 import CardAcoesPesquisa from "../../src/components/CardAcoesPesquisa";
+import { useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 
 export default function acoesPesquisa() {
+
+  const pesquisa = useSelector((state) => state.pesquisa);
+  const navigation = useNavigation();
+  
+  useEffect(() => {
+    navigation.setOptions({
+      title: pesquisa.pesquisaInfo?.nome || "Ações da Pesquisa", 
+    });
+  }, [pesquisa, navigation]);
+
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.cardContainer}>
