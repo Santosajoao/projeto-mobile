@@ -10,6 +10,7 @@ export default function esqueciSenhaScreen() {
   const [email, setEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [error, setError] = useState(true);
+  const [message, setMessage] = useState("");
 
   const handleesqueciSenha = () => {
     if (email.length === 0) {
@@ -21,17 +22,16 @@ export default function esqueciSenhaScreen() {
         setErrorMessage("Insira um email válido");
         return;
       }
-    console.log("Email:", email);
 
     setError(false);
     setErrorMessage("");
 
-    router.push("/autenticacao/login");
-
     sendPasswordResetEmail(auth, email)
       .then(() => {
-        console.log(JSON.stringify() + "Email enviado com sucesso");
-        router.push("/autenticacao/login");
+        setMessage("Email enviado com sucesso");
+        setTimeout(() => {
+          router.push("/autenticacao/login");
+        }, 3000);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -54,6 +54,7 @@ export default function esqueciSenhaScreen() {
         autoCapitalize="none"
       />
       <Text style={[styles.text, { color: "#FD7979" }]}>{errorMessage}</Text>
+      <Text style={[styles.text, { color: "#37BD6D" }]}>{message}</Text>
       
       <Botao
         color={"#37BD6D"}
