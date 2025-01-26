@@ -1,26 +1,29 @@
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import PieChart from "react-native-pie-chart";
 import React from "react";
 
-export default function Chart() {
-
-    const series = [10, 20, 30, 40];
-    const sliceColor = ["#F44336", "#2196F3", "#FFEB3B", "#4CAF50"];
-
+export default function Chart({pesquisa}) {
+  
+    console.log(pesquisa);
+    const allZero = pesquisa.avPessimo === 0 && pesquisa.avExcelente === 0 && pesquisa.avBom === 0 && pesquisa.avNeutro === 0 && pesquisa.avRuim === 0
   return (
     <View style={{ marginRight: 20, marginBottom: 50 }}>    
+     {allZero ? (
+        <Text>Relatório ainda sem avaliações</Text>
+      ) : (
       <PieChart
         widthAndHeight={220}
         series={[
-          { value: 19, color: "#53D8D8" }, //ciano
-          { value: 30, color: "#F1CE7E" }, //amarelo
-          { value: 30, color: "#6994FE" }, //azul
-          { value: 40, color: "#5FCDA4" }, //verde
-          { value: 21, color: "#EA7288" }, //rosa
+          { value: pesquisa.avPessimo, color: "#53D8D8" }, //ciano
+          { value: pesquisa.avExcelente, color: "#F1CE7E" }, //amarelo
+          { value: pesquisa.avBom, color: "#6994FE" }, //azul
+          { value: pesquisa.avNeutro, color: "#5FCDA4" }, //verde
+          { value: pesquisa.avRuim, color: "#EA7288" }, //rosa
         ]}
         doughnut={true} // Set to true for a doughnut chart
         coverRadius={10} // Adjust for the hole size
       />
+      )}
     </View>
   );
 }
