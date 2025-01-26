@@ -15,6 +15,7 @@ export default function coletarDados() {
             iconColor="#D71616"
             caption="Muito ruim"
             route={"pesquisa/agradecimentoParticipacao"}
+            avaliacao={"avPessimo"}
           />
           <Rating
             iconName="sentiment-dissatisfied"
@@ -22,6 +23,7 @@ export default function coletarDados() {
             iconColor="#FF360A"
             caption="Ruim"
             route={"pesquisa/agradecimentoParticipacao"}
+            avaliacao={"avRuim"}
           />
           <Rating
             iconName="sentiment-neutral"
@@ -29,6 +31,7 @@ export default function coletarDados() {
             iconColor="#FFC632"
             caption="Regular"
             route={"pesquisa/agradecimentoParticipacao"}
+            avaliacao={"avNeutro"}
           />
           <Rating
             iconName="sentiment-satisfied-alt"
@@ -36,6 +39,7 @@ export default function coletarDados() {
             iconColor="#37BD6D"
             caption="Bom"
             route={"pesquisa/agradecimentoParticipacao"}
+            avaliacao={"avBom"}
           />
           <Rating
             iconName="sentiment-very-satisfied"
@@ -43,6 +47,7 @@ export default function coletarDados() {
             iconColor="#25BC22"
             caption="Muito bom"
             route={"pesquisa/agradecimentoParticipacao"}
+            avaliacao={"avExcelente"}
           />
         </View>
       </View>
