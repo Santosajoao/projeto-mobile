@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, TextInput, StyleSheet, ScrollView } from "react-native";
+import { View, TextInput, StyleSheet, ScrollView, Text } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import Botao from "../../src/components/Botao";
 import Card from "../../src/components/Card";
@@ -21,7 +21,11 @@ const Home = () => {
   }, []);
 
   if (pesquisas.length === 0) {
-    return null;
+    return (
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text>Carregando...</Text>
+      </ScrollView>
+    );
   }
 
   return (
