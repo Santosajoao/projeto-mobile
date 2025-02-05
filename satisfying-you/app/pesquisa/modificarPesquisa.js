@@ -6,8 +6,8 @@ import Apagar from "../../src/components/BotaoApagar";
 import { updateDoc, doc, getDoc } from "firebase/firestore";
 import { db } from "../../src/firebase/config";
 import { useSelector } from "react-redux";
-import { launchImageLibrary } from "react-native-image-picker";
 import ImageResizer from "react-native-image-resizer";
+import * as ImagePicker from 'expo-image-picker';
 
 export default function modificarPesquisa() {
   const [nome, setNome] = useState("");
@@ -88,22 +88,28 @@ export default function modificarPesquisa() {
   };
 
   // Função para pegar a imagem da galeria
-  const pickImage = () => {
-    launchImageLibrary(
-      {
-        mediaType: "photo",
-        quality: 1,
-      },
-      (response) => {
-        if (response.didCancel) {
-          setErrorMessage("Imagem não selecionada");
-        } else if (response.errorCode) {
-          setErrorMessage("Erro ao selecionar a imagem");
-        } else {
-          setImagem(response.assets[0].uri);
-        }
-      }
-    );
+  const pickImage = async () => {
+    // Solicitar permissão para acessar a galeria
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== 'granted') {
+      setErrorMessage("Permissão para acessar a galeria negada");
+      return;
+    }
+  
+    // Abrir a galeria
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+  
+  
+    if (!result.canceled) {
+      setImagem(result.assets[0].uri);
+    } else {
+      setErrorMessage("Imagem não selecionada");
+    }
   };
 
   return (
@@ -125,13 +131,13 @@ export default function modificarPesquisa() {
         </View>
         <Text style={styles.text}>Imagem</Text>
 
-        <View style={styles.inputContainerImagem}>
           <Pressable onPress={pickImage}>
-            <Text style={styles.textInputimagem}>
-              Câmera/Galeria de imagens
-            </Text>
+            <View style={styles.inputContainerImagem}>
+                <Text style={styles.textInputimagem}>
+                  Câmera/Galeria de imagens
+                </Text>
+            </View>
           </Pressable>
-        </View>
 
         <Text style={[styles.text, { color: "#37BD6D" }]}>{message}</Text>
 

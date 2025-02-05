@@ -6,6 +6,7 @@ import { collection, addDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../src/firebase/config";
 import { launchImageLibrary } from "react-native-image-picker";
 import ImageResizer from "react-native-image-resizer";
+import * as ImagePicker from 'expo-image-picker';
 
 export default function novaPesquisa() {
   const [nome, setNome] = useState("");
@@ -89,23 +90,29 @@ export default function novaPesquisa() {
     reader.readAsDataURL(imageBlob);
   };
 
-  const pickImage = () => {
-    launchImageLibrary(
-      {
-        mediaType: "photo",
-        quality: 1,
-      },
-      (response) => {
-        if (response.didCancel) {
-          console.log("User cancelled image picker");
-        } else if (response.errorCode) {
-          console.log("ImagePicker Error: ", response.errorMessage);
-        } else {
-          console.log(response);
-          setImagem(response.assets[0].uri);
-        }
-      }
-    );
+  // Função para pegar a imagem da galeria
+  const pickImage = async () => {
+    // Solicitar permissão para acessar a galeria
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== 'granted') {
+      setErrorMessage("Permissão para acessar a galeria negada");
+      return;
+    }
+  
+    // Abrir a galeria
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+  S
+  
+    if (!result.canceled) {
+      setImagem(result.assets[0].uri);
+    } else {
+      setErrorMessage("Imagem não selecionada");
+    }
   };
 
   return (
@@ -127,13 +134,13 @@ export default function novaPesquisa() {
         </View>
         <Text style={styles.text}>Imagem</Text>
 
-        <View style={styles.inputContainerImagem}>
           <Pressable onPress={pickImage}>
-            <Text style={styles.textInputimagem}>
-              Câmera/Galeria de imagens
-            </Text>
+            <View style={styles.inputContainerImagem}>
+                <Text style={styles.textInputimagem}>
+                  Câmera/Galeria de imagens
+                </Text>
+            </View>
           </Pressable>
-        </View>
         {imagem && (
           <Image
             source={{ uri: imagem }}
